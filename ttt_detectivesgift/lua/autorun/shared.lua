@@ -1,4 +1,5 @@
---TODO: unterstützen der rolle reaper indem ich via convar regel welche rollen die waffe (wie der traitor) aufheben und anschauen können
+--TODO:	unterstützen der rolle reaper indem ich via convar regel welche rollen die waffe (wie der traitor) aufheben und anschauen können
+--	besser: onbuy -> item.detectivesgift = ply:getrole() -> traitor sterben bei waffen von reapern und umgekehrt
 
 if SERVER then
 	AddCSLuaFile()
