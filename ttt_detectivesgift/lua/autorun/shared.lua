@@ -1,6 +1,3 @@
---TODO:	unterstützen der rolle reaper indem ich via convar regel welche rollen die waffe (wie der traitor) aufheben und anschauen können
---	besser: onbuy -> item.detectivesgift = ply:getrole() -> traitor sterben bei waffen von reapern und umgekehrt
-
 if SERVER then
 	AddCSLuaFile()
 	resource.AddFile("materials/vgui/ttt/icon_detectivesgift.png")
@@ -23,20 +20,18 @@ end
 
 function DetectivesgiftDrop(ply, wep)
   if (!ply:HasEquipmentItem(EQUIP_DETECTIVESGIFT)) then return end
-  wep.detectivesgift = true
+  wep.detectivesgift = ply:GetRole()
 end
 function DetectivesgiftPickup(ply, wep)
-  if (wep.detectivesgift == true && ply:GetRole() != 1) then return false end
+  if (wep.detectivesgift && wep.detectivesgift != ply:GetRole()) then return false end
 end
 
 function LookAtDetectivesgift ()
   for i, ply in ipairs(team.GetPlayers(1)) do
-    if (ply:GetRole() != 1) then
-      if (ply:GetEyeTrace().Entity.detectivesgift == true) then
-        ply:Kill()
-      end
+    if (ply:GetEyeTrace().Entity.detectivesgift && ply:GetEyeTrace().Entity.detectivesgift != ply:GetRole()) then
+      ply:Kill()
     end
-	end
+  end
 end
 
 hook.Add("PlayerDroppedWeapon", "DetectivesgiftDrop", DetectivesgiftDrop)
